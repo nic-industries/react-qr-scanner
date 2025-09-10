@@ -151,7 +151,7 @@ export function Scanner(props: IScannerProps) {
     const [isMounted, setIsMounted] = useState(false);
     const [isCameraActive, setIsCameraActive] = useState(true);
 
-    const [constraintsCached, setConstraintsCached] = useState(mergedConstraints);
+    const constraintsCached = mergedConstraints;
 
     const camera = useCamera();
 
@@ -180,18 +180,6 @@ export function Scanner(props: IScannerProps) {
             startScanning();
         }
     }, [components?.tracker]);
-
-    useEffect(() => {
-        if (!deepEqual(mergedConstraints, constraintsCached)) {
-            const newConstraints = mergedConstraints;
-
-            if (constraints?.deviceId) {
-                delete newConstraints.facingMode;
-            }
-
-            setConstraintsCached(newConstraints);
-        }
-    }, [constraints]);
 
     const cameraSettings = useMemo(() => {
         return {
